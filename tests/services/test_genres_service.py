@@ -10,7 +10,7 @@ from project.services import GenreService
 
 class TestGenresService:
     @pytest.fixture(autouse=True)
-    def service(self, db):
+    def service(self, d):
         self.service = GenreService(db.session)
 
     @pytest.fixture

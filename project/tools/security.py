@@ -19,11 +19,6 @@ def login_user(req_json, user):
     email = req_json.get("email")
     password = req_json.get("password")
     if email and password:
-        password_hash = user["password"]
-        req_json["role"] = user["role"]
-        req_json["id"] = user["id"]
-        if user_service.compare_passwords(password_hash, password):
+        if user_service.compare_passwords(user.password, password):
             return auth_service.generate_tokens(req_json)
         raise ItemNotFound
-
-
