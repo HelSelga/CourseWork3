@@ -11,8 +11,8 @@ from project.services import DirectorService
 
 class TestDirectorsService:
     @pytest.fixture(autouse=True)
-    def service(self, db):
-        self.service = DirectorService(DirectorDAO)
+    def service(self, director_dao):
+        self.director_service = DirectorService(dao=director_dao)
 
     @pytest.fixture
     def director(self):

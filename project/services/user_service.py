@@ -26,6 +26,9 @@ class UserService:
     def get_by_email(self, email):
         return self.dao.get_by_email(email)
 
+    def get_by_password(self, password):
+        return self.dao.get_by_password(password)
+
     def create(self, user_d):
         user_d["password"] = self.make_user_password_hash(user_d.get("password"))
         return self.dao.create(user_d)
@@ -60,12 +63,27 @@ class UserService:
             )
             return hmac.compare_digest(decoded_digest, hash_digest)
 
-    def update_password(self, data):
-        password1 = data.get("password1")
-        password2 = data.get("password2")
-        pass_hash1 = self.make_user_password_hash(password1)
-        pass_hash2 = self.make_user_password_hash(password2)
-        if not self.compare_passwords(pass_hash1, pass_hash2):
-            pass_hash1 = pass_hash2
-            new_password = jwt.decode(pass_hash1, JWT_SECRET, algorithms=[JWT_ALGORYTHM])
-            return new_password
+    def update_password(self, user_d, uid):
+        # password1 = data.get("password1")
+        # password2 = data.get("password2")
+        # pass_hash1 = self.make_user_password_hash(password1)
+        # pass_hash2 = self.make_user_password_hash(password2)
+        # if not self.compare_passwords(pass_hash1, pass_hash2):
+        #     pass_hash1 = pass_hash2
+        #     new_password = jwt.decode(pass_hash1, JWT_SECRET, algorithms=[JWT_ALGORYTHM])
+        #     return new_password
+
+        pass_hash1 = self.make_user_password_hash(user_d.get("password1"))
+
+        user_password_hash = self.get_one(uid).get("password")
+
+        if self.compare_passwords(pass_hash1, user_password_hash):
+            pass_hash1 = self.make_user_password_hash(user_d.get("password2"))
+            password_new = jwt.decode(pass_hash1, JWT_SECRET, algorithms=[JWT_ALGORYTHM])
+            return password_new
+
+
+
+
+
+

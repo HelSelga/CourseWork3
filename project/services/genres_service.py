@@ -4,7 +4,7 @@ from project.schemas.genre import GenreSchema
 from project.services.base import BaseService
 
 
-class GenreService(BaseService):
+class GenreService:
     def __init__(self, dao: GenreDAO):
         self.dao = dao
 
@@ -12,7 +12,8 @@ class GenreService(BaseService):
         genre = self.dao.get_by_id(pk)
         if not genre:
             raise ItemNotFound
-        return GenreSchema().dump(genre)
+        return genre
+        # return GenreSchema().dump(genre)
 
     def get_all_genres(self):
         genres = self.dao.get_all()

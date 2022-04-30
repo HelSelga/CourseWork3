@@ -1,6 +1,7 @@
 from flask_restx import abort, Namespace, Resource
 
 from project.exceptions import ItemNotFound
+from project.implemented import genre_service
 from project.services.genres_service import GenreService
 from project.setup_db import db
 
@@ -12,7 +13,7 @@ class GenresView(Resource):
     @genres_ns.response(200, "OK")
     def get(self):
         """Get all genres"""
-        return GenreService(db.session).get_all_genres()
+        return genre_service.get_all_genres()
 
 
 @genres_ns.route("/<int:genre_id>")
@@ -22,6 +23,6 @@ class GenreView(Resource):
     def get(self, genre_id: int):
         """Get genre by id"""
         try:
-            return GenreService(db.session).get_item_by_id(genre_id)
+            return genre_service.get_item_by_id(genre_id)
         except ItemNotFound:
             abort(404, message="Genre not found")
