@@ -9,11 +9,11 @@ class DirectorService(BaseService):
         self.dao = dao
 
     def get_item_by_id(self, pk):
-        director = DirectorDAO(self._db_session).get_by_id(pk)
+        director = self.dao.get_by_id(pk)
         if not director:
             raise ItemNotFound
-        return DirectorSchema().dump(director)
+        return director
 
     def get_all_directors(self):
-        return self.dao.get_all()
+        directors = self.dao.get_all()
         return DirectorSchema(many=True).dump(directors)

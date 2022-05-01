@@ -5,7 +5,6 @@ from project.exceptions import ItemNotFound
 from project.helpers.decorators import auth_required
 from project.implemented import user_service
 
-
 users_ns = Namespace('users')
 
 parser = reqparse.RequestParser()
@@ -52,26 +51,27 @@ class UserView(Resource):
             abort(404, message="User not found")
 
 
-@users_ns.route('/password/<int:uid>')
+@users_ns.route('/password/')
 class UserPasswordView(Resource):
     @users_ns.response(200, "OK")
     @users_ns.response(404, "User not found")
     @auth_required
-    def put(self, uid: int):
+    def put(self):
         req_json = request.json
 
         if not req_json:
             abort(400, message='Bad Request')
         if not req_json.get("password1") or not req_json.get("password2"):
             abort(400, message='Bad Request')
-        if "id" not in req_json:
-            req_json["id"] = uid
 
         try:
-            user_service.update_password(req_json)
+            data = request.headers['Authorization']
+            token = data.split("Bearer ")[-1]
+            from project.helpers.constants import JWT_SECRET
+            from project.helpers.constants import JWT_ALGORYTHM
+            import jwt
+            token_decode = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORYTHM])
+            token_decode['email']
+            user_service.update_password(email=token_decode['email'], new_password=req_json.get("password2"))
         except ItemNotFound:
             abort(404, message="User not found")
-
-
-
-        
