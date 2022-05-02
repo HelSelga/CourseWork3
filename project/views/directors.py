@@ -9,7 +9,6 @@ directors_ns = Namespace("directors")
 
 @directors_ns.route("/")
 class DirectorsView(Resource):
-    @auth_required
     @directors_ns.response(200, "OK")
     def get(self):
         """Get all directors"""
@@ -18,7 +17,6 @@ class DirectorsView(Resource):
 
 @directors_ns.route("/<int:director_id>")
 class DirectorView(Resource):
-    @auth_required
     @directors_ns.response(200, "OK")
     @directors_ns.response(404, "Director not found")
     def get(self, director_id: int):

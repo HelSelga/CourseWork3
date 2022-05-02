@@ -9,7 +9,6 @@ genres_ns = Namespace("genres")
 
 @genres_ns.route("/")
 class GenresView(Resource):
-    @auth_required
     @genres_ns.response(200, "OK")
     def get(self):
         """Get all genres"""
@@ -18,7 +17,6 @@ class GenresView(Resource):
 
 @genres_ns.route("/<int:genre_id>")
 class GenreView(Resource):
-    @auth_required
     @genres_ns.response(200, "OK")
     @genres_ns.response(404, "Genre not found")
     def get(self, genre_id: int):
