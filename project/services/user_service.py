@@ -2,7 +2,6 @@ import base64
 import hashlib
 import hmac
 
-import jwt
 from flask import current_app
 
 from project.helpers.constants import PWD_HASH_ITERATIONS, PWD_HASH_SALT, JWT_SECRET, JWT_ALGORYTHM

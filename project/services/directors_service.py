@@ -12,7 +12,7 @@ class DirectorService(BaseService):
         director = self.dao.get_by_id(pk)
         if not director:
             raise ItemNotFound
-        return director
+        return DirectorSchema().dump(director)
 
     def get_all_directors(self):
         directors = self.dao.get_all()

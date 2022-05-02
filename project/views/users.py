@@ -67,11 +67,12 @@ class UserPasswordView(Resource):
         try:
             data = request.headers['Authorization']
             token = data.split("Bearer ")[-1]
-            from project.helpers.constants import JWT_SECRET
-            from project.helpers.constants import JWT_ALGORYTHM
+
+            from project.helpers.constants import JWT_SECRET, JWT_ALGORYTHM
             import jwt
+
             token_decode = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORYTHM])
-            token_decode['email']
             user_service.update_password(email=token_decode['email'], new_password=req_json.get("password2"))
+
         except ItemNotFound:
             abort(404, message="User not found")

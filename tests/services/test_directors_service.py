@@ -1,11 +1,9 @@
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 
 from project.dao import DirectorDAO
 from project.dao.models import Director
-from project.exceptions import ItemNotFound
-from project.schemas.director import DirectorSchema
 from project.services import DirectorService
 
 
@@ -29,7 +27,7 @@ class TestDirectorsService:
     def test_get_one(self):
         director = self.director_service.get_item_by_id(1)
         assert director is not None
-        assert director.id is not None
+        assert director['id'] is not None
 
     def test_get_all(self):
         director = self.director_service.get_all_directors()

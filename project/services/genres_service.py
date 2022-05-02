@@ -12,8 +12,7 @@ class GenreService(BaseService):
         genre = self.dao.get_by_id(pk)
         if not genre:
             raise ItemNotFound
-        return genre
-        # return GenreSchema().dump(genre)
+        return GenreSchema().dump(genre)
 
     def get_all_genres(self):
         genres = self.dao.get_all()

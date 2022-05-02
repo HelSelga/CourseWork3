@@ -2,7 +2,6 @@ import calendar
 import datetime
 
 import jwt
-from flask import abort
 
 from project.exceptions import ItemNotFound
 from project.helpers.constants import JWT_SECRET, JWT_ALGORYTHM

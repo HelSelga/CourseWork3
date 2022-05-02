@@ -33,18 +33,3 @@ def client(app, db):
     with app.test_client() as client:
         yield client
 
-
-
-
-@pytest.fixture()
-def director_dao():
-    director_dao = DirectorDAO(None)
-    cris = Director(id=21, name="Christina Robes")
-    sam = Director(id=22, name="Samuel Jackson")
-    dina = Director(id=23, name="Dina Stores")
-
-    director_dao.get_one = MagicMock(return_value=cris)
-    director_dao.get_all = MagicMock(return_value=[cris, sam, dina])
-
-    return director_dao
-

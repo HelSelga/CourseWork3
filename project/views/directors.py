@@ -2,14 +2,14 @@ from flask_restx import abort, Namespace, Resource
 
 from project.exceptions import ItemNotFound
 from project.implemented import director_service
-from project.services.directors_service import DirectorService
-from project.setup_db import db
+from project.helpers.decorators import auth_required
 
 directors_ns = Namespace("directors")
 
 
 @directors_ns.route("/")
 class DirectorsView(Resource):
+    @auth_required
     @directors_ns.response(200, "OK")
     def get(self):
         """Get all directors"""
@@ -18,6 +18,7 @@ class DirectorsView(Resource):
 
 @directors_ns.route("/<int:director_id>")
 class DirectorView(Resource):
+    @auth_required
     @directors_ns.response(200, "OK")
     @directors_ns.response(404, "Director not found")
     def get(self, director_id: int):
