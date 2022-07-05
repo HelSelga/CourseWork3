@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  app:
+    image: helselga/hw26:version-1
+    ports:
+      - 8080:80
+    volumes:
+      - ./volumes:/code/volumes
+    env_file:
+      - ./envs.env
